@@ -36,8 +36,7 @@ const CardAnnouncement = () => {
     setUserProfileView,
     setUserProfileViewId
   } = useContext<any>(UserContext);
-  // const { title, year, km, price, description, vehicle_type, img }: any =
-  //   announcementDetail;
+
   const ref = useRef<any>(null);
   const { id }: any = useParams();
   const history = useHistory();
