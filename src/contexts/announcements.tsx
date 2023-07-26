@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import API from "../api";
+import api from "../api";
 
 export interface IVehicle {
   id: string;
@@ -22,7 +22,7 @@ interface IMGS {
 }
 export interface User {
   id: string;
-  name: string;
+  username: string;
   email: string;
   cpf: string;
   phone: string;
@@ -51,32 +51,38 @@ export const AnnouncementsContext = createContext({});
 export const AnnouncementsProvider = ({ children }: any) => {
   const [cars, setCars] = useState<IVehicle[]>([]);
   const [motocycles, setMotorcycles] = useState<IVehicle[]>([]);
-  const [auctions, setAuctions] = useState<IVehicle[]>([])
+  const [auctions, setAuctions] = useState<IVehicle[]>([]);
 
   useEffect(() => {
-    API.get("/announcements")
-      .then((res) => {
+    const fetchAdvertisements = async () => {
+      try {
+        const { data } = await api.get("/advertisements/");
         setMotorcycles(
-          res.data.filter(
+          data.results.filter(
             (motocycle: IVehicle) =>
-              motocycle.vehicleType.toLocaleLowerCase() !== "car" 
+              motocycle.vehicleType.toLocaleLowerCase() !== "car"
               && motocycle.announcementType === "SALE" && motocycle.published === true
           )
         );
         setCars(
-          res.data.filter(
+          data.results.filter(
             (car: IVehicle) => car.vehicleType.toLocaleLowerCase() === "car"
-            && car.announcementType === "SALE" && car.published === true
+              && car.announcementType === "SALE" && car.published === true
           )
         );
         setAuctions(
-          res.data.filter(
+          data.results.filter(
             (car: IVehicle) => car.announcementType === 'AUCTION' && car.published === true
           )
-        )
-      })
-      .catch((err) => console.log(err));
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchAdvertisements();
   }, []);
+
   return (
     <AnnouncementsContext.Provider value={{ cars, motocycles, auctions }}>
       {children}

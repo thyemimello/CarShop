@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import API from "../../api";
+import api from "../../api";
 import { UserContext } from "../../contexts/user";
 import {
   Box,
@@ -48,7 +48,7 @@ const CommentAnnouncement = ({ id, reloadPage, setReloadPage }: Props) => {
   const sendComment = () => {
     if (comment !== "") {
       const createComment = new Promise((resolve, reject) =>
-        API.post(
+        api.post(
           `/announcements/${id}/comments`,
           { text: comment },
           { headers: { Authorization: `Bearer ${token}` } }
@@ -70,7 +70,7 @@ const CommentAnnouncement = ({ id, reloadPage, setReloadPage }: Props) => {
   const sendCommentFastButton = (e: any) => {
     const message = e.target.innerText;
     const createComment = new Promise((resolve, reject) =>
-      API.post(
+      api.post(
         `/announcements/${id}/comments`,
         {
           text: message,
@@ -97,16 +97,16 @@ const CommentAnnouncement = ({ id, reloadPage, setReloadPage }: Props) => {
 
   return (
     <>
-      {user.name ? (
+      {user.username ? (
         <Box>
           <Container color={arrayOfRandomColors[color]}>
             <div className="User__data">
               <figure>
-                {user.name.split(" ")[0][0].toUpperCase()}
-                {user.name.split(" ")[1] &&
-                  user.name.split(" ")[1][0].toUpperCase()}
+                {user.username.split(" ")[0][0].toUpperCase()}
+                {user.username.split(" ")[1] &&
+                  user.username.split(" ")[1][0].toUpperCase()}
               </figure>
-              <p>{user.name}</p>
+              <p>{user.username}</p>
             </div>
             <ContainerTextArea>
               <StyledTextArea

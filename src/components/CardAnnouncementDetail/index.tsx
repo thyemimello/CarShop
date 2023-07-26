@@ -12,7 +12,7 @@ import {
   BoxComments,
   ListComments,
 } from "./styles";
-import API from "../../api";
+import api from "../../api";
 import { useEffect, useState, useContext, useRef } from "react";
 import { useHistory, useParams } from "react-router";
 import CommentAnnouncement from "../ComentAnnouncement";
@@ -43,10 +43,9 @@ const CardAnnouncement = () => {
   const history = useHistory();
 
   useEffect(() => {
-    API.get(`/announcements/${id}`)
+    api.get(`/announcements/${id}`)
       .then((resp) => {
         setAnnouncementDetail(resp.data);
-        console.log(resp.data);
       })
       .catch((err) => {
         console.log(err);
@@ -55,16 +54,17 @@ const CardAnnouncement = () => {
   }, [reloadPage]);
 
   const goToUserAnnouncement = () => {
-    API.get(`/users/${announcementDetail.user.id}`, {
+    api.get(`/users/${announcementDetail.user.id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => {
+        console.log(res)
         setUserProfileViewId(res.data.id);
         setUserProfileView(res.data)
 
-        history.push(`/profile/${announcementDetail.user.id}`);
+        return history.push(`/profile/${announcementDetail.user.id}`);
       })
       .catch((err) => console.log(err));
   };
@@ -149,12 +149,12 @@ const CardAnnouncement = () => {
             <BoxPerfil>
               <div>
                 <p>
-                  {announcementDetail.user.name.split(" ")[0][0].toUpperCase()}
-                  {announcementDetail.user.name.split(" ")[1] &&
-                    announcementDetail.user.name.split(" ")[1][0].toUpperCase()}
+                  {announcementDetail.user.username.split(" ")[0][0].toUpperCase()}
+                  {announcementDetail.user.username.split(" ")[1] &&
+                    announcementDetail.user.username.split(" ")[1][0].toUpperCase()}
                 </p>
               </div>
-              <h3>{announcementDetail.user.name}</h3>
+              <h3>{announcementDetail.user.username}</h3>
               <p>{announcementDetail.user.bio}</p>
               <Button onClick={goToUserAnnouncement}>Ver todos anúncios</Button>
             </BoxPerfil>
@@ -162,7 +162,7 @@ const CardAnnouncement = () => {
         </BoxAnuncio>
         <BoxComments>
           <h2>Comentários</h2>
-          <ListComments>
+          {/* <ListComments>
             {announcementDetail.review.length > 0 ? (
               announcementDetail.review.map((comment: any) => (
                 <CardComments
@@ -184,7 +184,7 @@ const CardAnnouncement = () => {
                 }
               />
             )}
-          </ListComments>
+          </ListComments> */}
         </BoxComments>
         { token && user && <CommentAnnouncement id={id} setReloadPage={setReloadPage}
                   reloadPage={reloadPage} /> }

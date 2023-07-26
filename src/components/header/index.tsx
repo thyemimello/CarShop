@@ -26,7 +26,6 @@ const Header = ({ type }: IHeaderProps) => {
   const { setUser, setToken, token, user } = useContext<any>(UserContext);
 
   const historico = useHistory();
-
   const login = () => {
     historico.push("/login");
   };
@@ -126,9 +125,9 @@ const Header = ({ type }: IHeaderProps) => {
               <StyledHeaderButton>Leilão</StyledHeaderButton>
             </div>
 
-            <div onClick={goToDashboard} className="profile">{user?.name?.length > 0 && user.name[0].toUpperCase()}</div>
+                    <div onClick={goToDashboard} className="profile">{user?.username ?.length > 0 && user.username[0].toUpperCase()}</div>
             <MenuModal onClick={() => setModal(!modal)}>
-              {modal === false ? <p>{user.name}</p> : <p>{user.name}</p>}
+                      {modal === false ? <p>{user.username}</p> : <p>{user.username}</p>}
             </MenuModal>
             {modal === false ? (
               <></>

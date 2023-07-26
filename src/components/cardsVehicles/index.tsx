@@ -5,6 +5,8 @@ import { UserContext } from "../../contexts/user";
 import { useContext, useState } from "react";
 import { ModalFundo } from "../ModalFundo/styles";
 import FormEdit from "../FormEdit";
+import undefinedCar from "../../assets/indefidedCar.svg"
+
 export interface IVehicleProps {
   vehicle: {
     id: string;
@@ -34,7 +36,6 @@ export const CardVehicle = ({
   onOwnProfile,
   onHome,
 }: IVehicleProps) => {
-  console.log(onOwnProfile, onHome);
   const activeImage = vehicle.images?.filter((image) => image.type === "COVER");
   const historico = useHistory();
   const { userProfileView } = useContext<any>(UserContext);
@@ -56,22 +57,22 @@ export const CardVehicle = ({
           </div>
           <figure >
             <img
-              src={activeImage[0].imageUrl}
+              src={activeImage[0] ? activeImage[0].imageUrl : undefinedCar}
               alt={"Foto do veiculo " + vehicle.title}
-              
+
             />
           </figure>
           <article>
             <h1>{vehicle.title}</h1>
             <p>{vehicle.description}</p>
-            <span className="user__data">
+            {/* <span className="user__data">
               <figure>
                 {vehicle.user.name.split(" ")[0][0].toUpperCase()}
                 {vehicle.user.name?.split(" ")[1] &&
                   vehicle.user.name?.split(" ")[1][0].toUpperCase()}
               </figure>
               <p>{vehicle.user.name}</p>
-            </span>
+            </span> */}
             <div>
               <div className="km__year__car">
                 <span>{vehicle.km} KM</span>
@@ -91,7 +92,7 @@ export const CardVehicle = ({
       {onHome === false && onOwnProfile === true && (
         <>
           <CardStyled
-            
+
           >
             <div
               className={
@@ -102,7 +103,7 @@ export const CardVehicle = ({
             </div>
             <figure>
               <img
-                src={activeImage[0].imageUrl}
+                src={activeImage[0] ? activeImage[0].imageUrl : undefinedCar}
                 alt={"Foto do veiculo " + vehicle.title}
               />
             </figure>
@@ -133,22 +134,22 @@ export const CardVehicle = ({
               </InputButton>
 
               <InputButton onClick={() => {
-              historico.push(`/announcementDetail/${vehicle.id}`);
-            }}>Ver como</InputButton>
+                historico.push(`/announcementDetail/${vehicle.id}`);
+              }}>Ver como</InputButton>
             </DivButtons>
           </CardStyled>
 
           {
-           stateEdit ?
-           (
-            <ModalFundo>
-              <FormEdit vehicle={vehicle}/>
-            </ModalFundo>
-            ) 
-            :
-            (
-              ""
-            )
+            stateEdit ?
+              (
+                <ModalFundo>
+                  <FormEdit vehicle={vehicle} />
+                </ModalFundo>
+              )
+              :
+              (
+                ""
+              )
           }
         </>
       )}
@@ -167,7 +168,7 @@ export const CardVehicle = ({
           </div>
           <figure>
             <img
-              src={activeImage[0].imageUrl}
+              src={activeImage[0] ? activeImage[0].imageUrl : undefinedCar}
               alt={"Foto do veiculo " + vehicle.title}
             />
           </figure>

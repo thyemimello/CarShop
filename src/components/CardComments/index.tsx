@@ -6,7 +6,7 @@ import TimeAgo from "javascript-time-ago";
 import pt from "javascript-time-ago/locale/pt";
 import { UserContext } from "../../contexts/user";
 import { useContext, useState } from "react";
-import API from "../../api";
+import api from "../../api";
 import { toast } from "react-toastify";
 
 TimeAgo.addDefaultLocale(pt);
@@ -38,7 +38,7 @@ export const CardComments = ({
   };
 
   const editComment = (data: any) => {
-    API.patch(`/comments/${id}`, data, {
+    api.patch(`/comments/${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -55,7 +55,7 @@ export const CardComments = ({
   };
 
   const deleteComment = () => {
-    API.delete(`/comments/${id}`, {
+    api.delete(`/comments/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

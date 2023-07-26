@@ -1,6 +1,6 @@
 import { useContext , useState} from "react";
 import { useForm } from "react-hook-form";
-import API from "../../api";
+import api from  "../../api";
 import { Review, User } from "../../contexts/announcements";
 import { UserContext } from "../../contexts/user";
 import { FormPattern } from "../FormPadrão/styles";
@@ -71,7 +71,7 @@ const FormEdit = ({vehicle}:IVehicleEdit) => {
     isCar ? data.vehicleType = "CAR" : data.vehicleType = "MOTORCYCLE"
 
      
-      API.patch('/announcements/'+vehicle.id, data, {
+      api.patch('/announcements/'+vehicle.id, data, {
         headers: {
           "Authorization" : `Bearer ${token}` 
         }
@@ -89,7 +89,7 @@ const FormEdit = ({vehicle}:IVehicleEdit) => {
 
   }
   const excluidAnnouncement = ()=>{
-    API.delete('/announcements/'+vehicle.id,{
+    api.delete('/announcements/'+vehicle.id,{
       headers: {
         "Authorization" : `Bearer ${token}` 
       }

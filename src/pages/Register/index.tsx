@@ -15,7 +15,7 @@ import Main, {
 } from "./styles";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import API from "../../api";
+import api from "../../api";
 import { useState } from "react";
 
 const Register = () => {
@@ -44,14 +44,10 @@ const Register = () => {
     setOpenModalSuccess(!openModalSuccess);
   };
 
-  const onSubmit = (data: any) => {
+  const send = async (data: any) => {
     if (data.complement === "") {
       data.complement = "sem complemento";
-    }
-
-    if (data.bio === "") {
-      data.bio = `Olá, me chamo ${data.name}`;
-    }
+    } 
 
     data.address = {
       cep: data.cep,
@@ -60,6 +56,7 @@ const Register = () => {
       street: data.street,
       number: data.number,
       complement: data.complement,
+      zip_code: data.zip_code,
     };
 
     delete data.cep;
@@ -68,34 +65,31 @@ const Register = () => {
     delete data.number;
     delete data.complement;
     delete data.street;
+    delete data.zip_code;
 
-    data.isAdm = false;
-    data.isAdvertiser = isAdvertiser;
-
-    data.birthdate = data.birthdate.split("/").reverse().join("-");
-
-    API.post("/users", data)
-      .then((res) => {
-        requestSuccessOpen();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    data.brithdate = data.brithdate.split("/").reverse().join("-");
+    try {
+      const res = await api.post("/users/", data);
+      requestSuccessOpen();
+    } catch (err) {
+      console.log(err);
+    }
   };
+
 
   return (
     <Main>
       <Header type="anonymous" />
       {openModalSuccess ? <ModalSuccessRegister handleOpen={handleOpen} /> : ""}
       <StyledRegisterSection>
-        <StyledRegisterForm onSubmit={handleSubmit(onSubmit)}>
+        <StyledRegisterForm onSubmit={handleSubmit(send)}>
           <TitleForm>Cadastro</TitleForm>
           <TitleP>Informações pessoais</TitleP>
           <LabelForm htmlFor="">Nome</LabelForm>
           <InputPattern
             type="text"
             placeholder="Ex: Manoel Gomes"
-            {...register("name", { required: true })}
+            {...register("username", { required: true })}
           />
           <LabelForm htmlFor="">Email</LabelForm>
           <InputPattern
@@ -109,30 +103,24 @@ const Register = () => {
             placeholder="000.000.000-00"
             {...register("cpf", { required: true })}
           />
-          <LabelForm htmlFor="">Telefone</LabelForm>
-          <InputPattern
-            type="text"
-            placeholder="(DDD) 90000-0000"
-            {...register("phone", { required: true })}
-          />
           <LabelForm htmlFor="">Data de Nascimento</LabelForm>
           <InputPattern
             type="date"
             placeholder="00/00/0000"
-            {...register("birthdate", { required: true })}
+            {...register("brithdate", { required: true })}
           />
-          <LabelForm htmlFor="">Descrição</LabelForm>
+          <LabelForm htmlFor="">URL da Imagem</LabelForm>
           <InputPattern
             type="text"
-            placeholder="Conte um pouco sobre você em poucas palavras"
-            {...register("bio", { required: false })}
+            placeholder="www.image.com.br"
+            {...register("profile_img", { required: true })}
           />
           <TitleP>Informações de endereço</TitleP>
           <LabelForm htmlFor="">CEP</LabelForm>
           <InputPattern
             type="text"
             placeholder="00000.000"
-            {...register("cep", { required: true })}
+            {...register("zip_code", { required: true })}
           />
           <div className="rowDiv">
             <div className="columnDiv">
@@ -175,46 +163,6 @@ const Register = () => {
                 {...register("complement", { required: false })}
               />
             </div>
-          </div>
-          <TitleP>Tipo de conta</TitleP>
-          <div className="rowDiv">
-            {isAdvertiser ? (
-              <>
-                <BuyerBtn
-                  type="button"
-                  value={"Comprador"}
-                  color="color"
-                  onClick={() => {
-                    setIsAdvertiser(false);
-                  }}
-                />
-                <BuyerBtn
-                  type="button"
-                  value={"Anunciante"}
-                  onClick={() => {
-                    setIsAdvertiser(true);
-                  }}
-                />
-              </>
-            ) : (
-              <>
-                <BuyerBtn
-                  type="button"
-                  value={"Comprador"}
-                  onClick={() => {
-                    setIsAdvertiser(false);
-                  }}
-                />
-                <BuyerBtn
-                  type="button"
-                  value={"Anunciante"}
-                  color="color"
-                  onClick={() => {
-                    setIsAdvertiser(true);
-                  }}
-                />
-              </>
-            )}
           </div>
           <LabelForm htmlFor="">Senha</LabelForm>
           <InputPattern

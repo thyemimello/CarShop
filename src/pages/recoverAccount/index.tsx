@@ -5,7 +5,7 @@ import { InputPattern, LabelForm, TitleForm } from "../../components/FormPerfil/
 import Header from "../../components/header"
 import { AccountButton, Main, StyledForm, StyledSection } from "./styles"
 import ModalRecoverEmailSuccess from "../../components/ModalRecoverAccount"
-import API from "../../api"
+import api from "../../api"
 import Footer from "../../components/Footer"
 
 const RecoverAccount = () => {
@@ -28,7 +28,7 @@ const RecoverAccount = () => {
     }
 
     const onSubmit = (data: any) => {
-        API.post("/login/passwordrecover", data)
+        api.post("/login/passwordrecover", data)
         .then((res) => {
                 requestSuccessOpen()
         })

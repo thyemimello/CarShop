@@ -30,11 +30,11 @@ const AuctionCard = ({ vehicle, onHome, onOwnProfile }: AuctionCardProps) => {
                             <span className="user__data">
                             <div className="rowDiv">
                                 <figure className="profile">
-                                    {vehicle.user.name.split(" ")[0][0].toUpperCase()}
-                                    {vehicle.user.name?.split(" ")[1] &&
-                                    vehicle.user.name?.split(" ")[1][0].toUpperCase()}
+                                    {vehicle.user.username.split(" ")[0][0].toUpperCase()}
+                                    {vehicle.user.username?.split(" ")[1] &&
+                                    vehicle.user.username?.split(" ")[1][0].toUpperCase()}
                                 </figure>
-                                <p>{vehicle.user.name}</p>
+                                <p>{vehicle.user.username}</p>
                             </div>
                             </span>
                             <div>

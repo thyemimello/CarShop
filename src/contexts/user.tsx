@@ -22,7 +22,7 @@ export const UserProvider = ({ children }: any) => {
         setUserProfileView,stateEdit,
         setEdit,
         userProfileViewId,
-        setUserProfileViewId
+        
       }}
     >
       {children}

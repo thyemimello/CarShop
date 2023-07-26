@@ -2,7 +2,7 @@ import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import API from "../../api";
+import api from  "../../api";
 import Footer from "../../components/Footer";
 import { TitleP } from "../../components/FormAnuncio/styles";
 import {
@@ -42,7 +42,7 @@ const UpdatePasswordRecover = () => {
   };
 
   const onSubmit = (data: any) => {
-    API.patch("/login/passwordrecover", data, {
+    api.patch("/login/passwordrecover", data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

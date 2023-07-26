@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import API from "../../api";
+import api from  "../../api";
 import Header from "../../components/header";
 import { FormStyled, Container } from "./styles";
 import { toast } from "react-toastify";
@@ -27,22 +27,21 @@ const Login = () => {
 
   const sendData = () => {
     if (inputUser && inputPassword !== "") {
-      // console.log(inputUser, inputPassword)
       const Login = new Promise((resolve, reject) =>
-        API.post("/login", {
-          email: inputUser,
+        api.post("/users/login/", {
+          username: inputUser,
           password: inputPassword,
         })
           .then((res) => {
             resolve(res);
-            const decoded: any = jwtDecode(res.data.token);
-            localStorage.setItem("TOKEN_MOTORS_SHOP", res.data.token);
-            const userId = decoded.id;
-            setToken(res.data.token);
+            const decoded: any = jwtDecode(res.data.access);
+            localStorage.setItem("TOKEN_MOTORS_SHOP", res.data.access);
+            const userId = decoded.user_id;
+            setToken(res.data.access);
 
-            API.get(`/users/${userId}`, {
+            api.get(`/users/${userId}`, {
               headers: {
-                Authorization: `Bearer ${res.data.token}`,
+                Authorization: `Bearer ${res.data.access}`,
               },
             }).then((res) => {
               setUser(res.data);

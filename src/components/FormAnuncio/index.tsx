@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import API from "../../api";
+import api from "../../api";
 import { UserContext } from "../../contexts/user";
 import { BuyerBtn } from "../../pages/Register/styles";
 import { FormPattern } from "../FormPadrão/styles";
@@ -43,7 +43,7 @@ const FormAnuncio = ({ open, setOpen }: IProps) => {
     isSale ? data.announcementType = "SALE" : data.announcementType = "AUCTION"
     isCar ? data.vehicleType = "CAR" : data.vehicleType = "MOTORCYCLE"
 
-    API.post('/announcements', data, {
+    api.post('/announcements', data, {
       headers: {
         "Authorization" : `Bearer ${token}` 
       }

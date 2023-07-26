@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import API from "../../api";
+import api from "../../api";
 import { User } from "../../contexts/announcements";
 import { UserContext } from "../../contexts/user";
 import { FormPattern } from "../FormPadrão/styles";
@@ -47,7 +47,7 @@ const FormEndereco = ({ open, setOpen }: IProps) => {
 
   const sendDataPatchAddress = () => {
     const updateAdress = new Promise((resolve, reject) =>
-      API.patch(
+      api.patch(
         `/users/addresses/${user.address.id}`,
         {
           cep: cep,

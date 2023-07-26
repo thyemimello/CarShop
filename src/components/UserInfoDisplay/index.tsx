@@ -15,8 +15,6 @@ const UserInfoDisplay = ({ profile, user, userId }: UIDisplay) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const {id} = useParams<any>()
-  
-
   const handleOpen = (e: any) => {
     if (
       e.target.title === "formCreateAnnouncement" ||
@@ -28,12 +26,11 @@ const UserInfoDisplay = ({ profile, user, userId }: UIDisplay) => {
 
   return profile ? (
     <UserInfoDiv>
-
       <div className="iniciais">
-        {user.name[0].toUpperCase()}
+        {user.username[0].toUpperCase()}
       </div>
       <div>
-        <span>{user.name}</span>
+        <span>{user.username }</span>
         {user.isAdvertiser && <span className="advertiser">Anunciante</span>}
       </div>
       <p>{user.bio}</p>

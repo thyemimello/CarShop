@@ -7,7 +7,7 @@ import CommentAnnouncement from "../../components/ComentAnnouncement";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/user";
 import jwtDecode from "jwt-decode";
-import API from "../../api";
+import api from  "../../api";
 
 const AnnouncementsDetail = () => {
   const { setUser, setToken, token, user } = useContext<any>(UserContext);
@@ -19,7 +19,7 @@ const AnnouncementsDetail = () => {
 
     const decoded:any = tokenExists && (jwtDecode(token))
     
-    token !== "" && API.get(`/users/${decoded.id}`).then((res) => {setUser(res.data)}).catch((err) => {console.log(err)})
+    token !== "" && api.get(`/users/${decoded.user_id}`).then((res) => {setUser(res.data)}).catch((err) => {console.log(err)})
 
   }, [])
 

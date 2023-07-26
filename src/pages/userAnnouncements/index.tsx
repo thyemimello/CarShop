@@ -7,7 +7,7 @@ import { CardsList } from "../../components/renderCards";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../contexts/user";
 import { useParams } from "react-router-dom";
-import API from "../../api";
+import api from  "../../api";
 import { DivSpace } from "../../styles";
 import jwtDecode from "jwt-decode";
 
@@ -15,12 +15,11 @@ const Dashboard = () => {
   const [isLoaded, setIsLoaded] = useState(false)
 
   const { setUser, setToken, token, user, userProfileView, setUserProfileView, userProfileViewId, } = useContext<any>(UserContext);
-
   useEffect(() => {
 
     localStorage.setItem("USER_CONTEXT_PROFILE", userProfileViewId)
-
-    API.get(`/users/${userProfileViewId}`)
+    console.log(userProfileViewId)
+    api.get(`/users/${userProfileViewId}`)
     .then((res) => {
       setUserProfileView(res.data)
     })
@@ -32,7 +31,7 @@ const Dashboard = () => {
 
     const decoded:any = tokenExists && (jwtDecode(token))
     
-    token !== "" && API.get(`/users/${decoded.id}`).then((res) => {setUser(res.data)}).catch((err) => {console.log(err)})
+    token !== "" && api.get(`/users/${decoded.id}`).then((res) => {setUser(res.data)}).catch((err) => {console.log(err)})
 
   }, [])
 
@@ -42,23 +41,24 @@ const Dashboard = () => {
     setIsLoaded(true)
   }, 200)
 
+
   return (
     <>
-    {isLoaded && token && user.id === id &&
+    {isLoaded && token && user.user_id === id &&
     <MainDashboard>
     <Header type="owner" />
     <CardFixo type="default" />
-    <UserInfoDisplay profile user={user} userId={user.id} />
+    <UserInfoDisplay profile user={user} userId={user.user_id} />
     <DivSpace height="160px" />
     <CardsList />
     <Footer />
     </MainDashboard>
     }
-    {isLoaded && token && user.id !== id &&
+    {isLoaded && token && user.user_id !== id &&
     <MainDashboard>
     <Header type="owner" />
     <CardFixo type="default" />
-    <UserInfoDisplay profile user={userProfileView} userId={user.id} />
+    <UserInfoDisplay profile user={userProfileView} userId={user.user_id} />
     <DivSpace height="160px" />
     <CardsList />
     <Footer />
@@ -68,7 +68,7 @@ const Dashboard = () => {
     <MainDashboard>
     <Header type="owner" />
     <CardFixo type="default" />
-    <UserInfoDisplay profile user={userProfileView} userId={user.id} />
+    <UserInfoDisplay profile user={userProfileView} userId={user.user_id} />
     <DivSpace height="160px" />
     <CardsList />
     <Footer />
