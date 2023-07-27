@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import Login from "../pages/Login/index";
 import RecoverAccount from "../pages/recoverAccount";
 import UpdatePasswordRecover from "../pages/UpdatePasswordRecover";
+import PostCar from "../pages/PostCar";
 
 const Routes = () => {
   return (
@@ -30,6 +31,9 @@ const Routes = () => {
       </Route>
       <Route exact path="/recoveraccount/:token">
         <UpdatePasswordRecover />
+      </Route>
+      <Route exact path="/postcar">
+        <PostCar />
       </Route>
     </Switch>
   );

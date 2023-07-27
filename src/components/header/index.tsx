@@ -55,6 +55,10 @@ const Header = ({ type }: IHeaderProps) => {
     }
   };
 
+  const handleOpen3 = () => {
+    historico.push('/postcar')
+  };
+
   const handleLogout = () => {
     setUser({})
     setToken('')
@@ -74,9 +78,9 @@ const Header = ({ type }: IHeaderProps) => {
     token && user ? historico.push(`/profile/${user.id}`) : historico.push('/login')
   }
 
-      return (
-        <>
-        {token === "" ?
+  return (
+    <>
+      {token === "" ?
         <Box>
           <section>
             <img src={Logo} alt="Logo Motors-Shop" onClick={home} />
@@ -107,86 +111,94 @@ const Header = ({ type }: IHeaderProps) => {
           )}
         </Box> :
         <Box>
-        <section>
-          <img src={Logo} alt="Logo Motors-Shop" onClick={home} />
-        </section>
-        {mobile ? (
-          <div>
-            <MenuButton onClick={() => setModal(!modal)}>
-              {modal === false ? <FaBars /> : <GrClose />}
-            </MenuButton>
-            {modal === false ? <></> : <ModalHeader type="owner" />}
-          </div>
-        ) : (
-          <section className="container">
-            <div className="vehicles">
+          <section>
+            <img src={Logo} alt="Logo Motors-Shop" onClick={home} />
+          </section>
+          {mobile ? (
+            <div>
+              <MenuButton onClick={() => setModal(!modal)}>
+                {modal === false ? <FaBars /> : <GrClose />}
+              </MenuButton>
+              {modal === false ? <></> : <ModalHeader type="owner" />}
+            </div>
+          ) : (
+            <section className="container">
+              <div className="vehicles">
                 <a href="#Carros"><StyledHeaderButton >Carros</StyledHeaderButton></a>
                 <a href="#Motos"><StyledHeaderButton>Motos</StyledHeaderButton></a>
-              <StyledHeaderButton>Leilão</StyledHeaderButton>
-            </div>
-
-                    <div onClick={goToDashboard} className="profile">{user?.username ?.length > 0 && user.username[0].toUpperCase()}</div>
-            <MenuModal onClick={() => setModal(!modal)}>
-                      {modal === false ? <p>{user.username}</p> : <p>{user.username}</p>}
-            </MenuModal>
-            {modal === false ? (
-              <></>
-            ) : (
-              <Modal>
-                <nav>
-                  <div className="divisionNavModal">
-                    <Button
-                      title="buttonOpenEditProfile"
-                      onClick={(e: any) => {
-                        handleOpen(e);
-                      }}
-                    >
-                      Editar Perfil
-                    </Button>
-                    {open ? (
-                      <ModalFundo
-                        title="formEditProfile"
-                        onClick={(e) => {
+                <StyledHeaderButton>Leilão</StyledHeaderButton>
+              </div>
+              <div onClick={() => setModal(!modal)} className="profile">{user?.username?.length > 0 && user.username[0].toUpperCase()}</div>
+              <MenuModal onClick={() => setModal(!modal)}>
+                {modal === false ? <p>{user.username}</p> : <p>{user.username}</p>}
+              </MenuModal>
+              {modal === false ? (
+                <></>
+              ) : (
+                <Modal>
+                  <nav>
+                    <div className="divisionNavModal">
+                      <Button
+                        title="buttonOpenEditProfile"
+                        onClick={(e: any) => {
                           handleOpen(e);
                         }}
                       >
-                        <FormPerfil open={open} setOpen={setOpen} />
-                      </ModalFundo>
-                    ) : (
-                      ""
-                    )}
-                    <Button
-                      title="buttonOpenEditAdress"
-                      onClick={(e: any) => {
-                        handleOpen2(e);
-                      }}
-                    >
-                      Editar Endereço
-                    </Button>
-                    {open2 ? (
-                      <ModalFundo
-                        title="formEditAdress"
-                        onClick={(e) => {
+                        Editar Perfil
+                      </Button>
+                      {open ? (
+                        <ModalFundo
+                          title="formEditProfile"
+                          onClick={(e) => {
+                            handleOpen(e);
+                          }}
+                        >
+                          <FormPerfil open={open} setOpen={setOpen} />
+                        </ModalFundo>
+                      ) : (
+                        ""
+                      )}
+                      <Button
+                        title="buttonOpenEditAdress"
+                        onClick={(e: any) => {
                           handleOpen2(e);
                         }}
                       >
-                        <FormEndereco open={open2} setOpen={setOpen2} />
-                      </ModalFundo>
-                    ) : (
-                      ""
-                    )}
-                    <Button onClick={goToDashboard}>{user.isAdvertiser && "Meus Anúncios"}</Button>
-                    <Button onClick={handleLogout}>Sair</Button>
-                  </div>
-                </nav>
-              </Modal>
-            )}
-          </section>
-        )}
-      </Box>
+                        Editar Endereço
+                          </Button>
+                          <Button
+                            title="buttonOpenEditAdress"
+                            onClick={(e: any) => {
+                              handleOpen3();
+                            }}
+                          >
+                            Criar Anuncios
+                          </Button>
+
+                      {open2 ? (
+                        <ModalFundo
+                          title="formEditAdress"
+                          onClick={(e) => {
+                            handleOpen2(e);
+                          }}
+                        >
+                          <FormEndereco open={open2} setOpen={setOpen2} />
+                        </ModalFundo>
+                      ) : (
+                        ""
+                      )}
+                      <Button onClick={goToDashboard}>{user.isAdvertiser && "Meus Anúncios"}</Button>
+                      <Button onClick={handleLogout}>Sair</Button>
+                    </div>
+                  </nav>
+                </Modal>
+              )}
+            </section>
+          )}
+        </Box>
       }
-      </>
-    );
-  }
+    </>
+  );
+}
 
 export default Header;

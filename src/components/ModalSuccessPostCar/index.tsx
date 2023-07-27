@@ -9,8 +9,8 @@ interface IProps {
 const ModalSuccessPostCar = ({ handleOpen }: IProps) => {
     const history = useHistory();
 
-    const login = () => {
-        history.push("/login");
+    const Home = () => {
+        history.push("/");
     };
 
     return(
@@ -19,9 +19,9 @@ const ModalSuccessPostCar = ({ handleOpen }: IProps) => {
                 <div className="divRow">
                     <h3 className="title">Sucesso</h3><ButtonClosed title="closed" onClick={(e) => {handleOpen(e)}}>X</ButtonClosed>
                 </div>
-                <TitleForm className="subtitle">Sua conta foi criada com sucesso!</TitleForm>
+                <TitleForm className="subtitle">Seu anúncio foi criado com sucesso!</TitleForm>
                 <span>Agora você podera ver seus negócios crescendo em grande escala</span>
-                <button className="goToLoginBtn" onClick={login} >Ir para o login</button>
+                <button className="goToLoginBtn" onClick={Home} >Anuncios</button>
             </ModalDiv>
         </ModalBackground>
     )
